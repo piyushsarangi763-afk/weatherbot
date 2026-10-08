@@ -6,7 +6,12 @@ module.exports = async (req, res) => {
   try {
     const params = (req.body && req.body.queryResult && req.body.queryResult.parameters) || {};
     const city = params['geo-city'];
-    const date = params['date']; // e.g. "2026-10-09T12:00:00+05:30" or ""
+    // Agent may use @sys.date ("date") or @sys.date-time ("date-time").
+    // date-time can be a string or an object like {startDateTime, endDateTime} / {date_time}.
+    let date = params['date-time'] || params['date'] || '';
+    if (date && typeof date === 'object') {
+      date = date.date_time || date.startDateTime || date.startDate || '';
+    }
 
     if (!city) {
       return res.json({ fulfillmentText: 'Which city do you want the weather for?' });

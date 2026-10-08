@@ -1,0 +1,8 @@
+{
+  "name": "weatherbot",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@google-cloud/dialogflow": ">=5.0.0"
+  }
+}
